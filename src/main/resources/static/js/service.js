@@ -1,18 +1,3 @@
-let result = {
-    "result": 100.0,
-    "questions": [
-        {
-            "id": 1,
-            "selectedAnswer": "c",
-            "correctedAnswer": "c"
-        },
-        {
-            "id": 2,
-            "selectedAnswer": "c",
-            "correctedAnswer": "c"
-        }
-    ]
-};
 
 const form = document.getElementById("container");
 const button = document.getElementById("button");
@@ -29,6 +14,10 @@ function perform() {
         let oneQuestion = document.getElementById(i);
         let id = oneQuestion.id;
         let selectedAnswer = oneQuestion.elements.fav_language.value;
+        if (!selectedAnswer) {
+            alert("You should answer all questions.");
+            return;
+        }
         data.push({
             id,
             selectedAnswer
@@ -42,6 +31,7 @@ async function getResponse(data) {
                     'Content-Type': 'application/json'};
     const response = await fetch('http://localhost:8080/questions', {method:"POST", headers, body: JSON.stringify(data)})
                         .then(res => res.json());
+    console.log(response);
     for (let i = 0; i < response.questions.length; i++){
         let questionId = response.questions[i].id
         let form = document.getElementById(questionId);
@@ -56,5 +46,9 @@ async function getResponse(data) {
             inputOfAnswer.parentNode.className = "red";
         }
     }
+    button.parentNode.removeChild(button);
+    document.getElementById('progress').innerHTML = `${response.result}%`;
+    document.getElementById('progress').innerHTML += `<progress value=${response.result} max="100"></progress>`;
+    window.scrollTo(0, document.body.scrollHeight);
 }
 

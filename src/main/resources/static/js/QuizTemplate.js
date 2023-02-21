@@ -1,22 +1,6 @@
 class QuizTemplate {
 
     async prepareTemplate(form) {
-        const questions12 = [
-            {
-            "id": 1,
-            "questionText": "Who was the first president of Czechoslovakia?",
-            "answerA": "T.G.M.",
-            "answerB": "Edvard Benes",
-            "answerC": "Emil Hacha"
-            },
-            {
-            "id": 2,
-            "questionText": "What was the third biggest city in Czechoslovakia?",
-            "answerA": "Brno",
-            "answerB": "Bratislava",
-            "answerC": "Ostrava"
-            }
-        ];
         const questions = await fetch('http://localhost:8080/questions').then(response => response.json());
         for (let i = 0; i < questions.length; i++) {
             let question = document.createElement("form");
