@@ -47,8 +47,28 @@ async function getResponse(data) {
         }
     }
     button.parentNode.removeChild(button);
-    document.getElementById('progress').innerHTML = `${response.result}%`;
-    document.getElementById('progress').innerHTML += `<progress value=${response.result} max="100"></progress>`;
+    const barContainer = document.createElement("div");
+    barContainer.className = "bar-container";
+    barContainer.innerHTML = `<div class='circular-progress'>
+                                <div class='value-container'>0%</div>
+                            </div>`
+    document.body.appendChild(barContainer);
+    let progressBar = document.querySelector(".circular-progress");
+    let valueContainer = document.querySelector(".value-container");
+    let progressValue = 0;
+    let progressEndValue = response.result;
+    let speed = 20;
+    let progress = setInterval(() => {
+      progressValue++;
+      valueContainer.textContent = `${progressValue}%`;
+      progressBar.style.background = `conic-gradient(
+        #4d5bf9 ${progressValue * 3.6}deg,
+        #cadcff ${progressValue * 3.6}deg
+      )`;
+      if (progressValue === progressEndValue) {
+        clearInterval(progress);
+      }
+    }, speed);
     window.scrollTo(0, document.body.scrollHeight);
 }
 

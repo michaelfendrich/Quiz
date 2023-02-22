@@ -11,6 +11,7 @@ import quiz.entity.Question;
 import quiz.repostitory.QuestionRepository;
 
 import java.lang.reflect.Field;
+import java.sql.SQLOutput;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,11 +33,16 @@ class QuizControllerTest {
     @Test
     public void shouldReturnANewEntity() {
         //given
+        /*
+        not necessary to add any object because of db.migration which is also migrated into
+        testing database
+         */
         //when
         Question[] result = template
                 .getForObject("http://localhost:" + port + "/questions", Question[].class);
 
         //then
+        System.out.println(result.length);
         assertThat(result[0].getQuestionText()).contains("Czechoslovakia");
     }
 

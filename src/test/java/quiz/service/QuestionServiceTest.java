@@ -1,13 +1,8 @@
 package quiz.service;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import quiz.entity.Question;
 import quiz.repostitory.QuestionRepository;
-
-
-import java.lang.reflect.Field;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;

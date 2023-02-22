@@ -1,0 +1,83 @@
+#container {
+    width: 40%;
+    margin: 0 auto;
+    margin-top: 150px;
+}
+#button {
+    width: 40%;
+    margin-left: 30%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    height: 52px;
+    border: none;
+    color: white;
+    padding: 14px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: #008CBA;
+    color: white;
+    border: 2px solid #008CBA;
+}
+#button:hover {
+    background-color: white; 
+    color: black; 
+}
+body {
+    margin: 0;
+    font-family: Arial;
+    margin: 0;
+}
+header {
+    padding: 5px;
+    width: 100%;
+    height: 100px;
+    background-color: #008CBA;
+    font-size: 30px;
+    text-align: center;
+    text-transform: uppercase;
+    position: fixed;
+    color: aliceblue;
+    top: 0;
+}
+header > div {
+    padding-top: 2%;
+}
+.red {
+    background-color: rgb(255, 69, 69);
+}
+.green {
+    background-color: rgb(127, 255, 212);
+}
+.neutral {
+    background-color: white;
+}
+.bar-container {
+    width: 40px;
+    margin: 35px 40%;
+    border-radius: 8px;
+  }
+  .circular-progress {
+    position: relative;
+    height: 200px;
+    width: 200px;
+    background-color: #cadcff;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+  }
+  .circular-progress::before {
+    content: "";
+    position: absolute;
+    height: 84%;
+    width: 84%;
+    background-color: #ffffff;
+    border-radius: 50%;
+  }
+  .value-container {
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    font-size: 50px;
+  }
