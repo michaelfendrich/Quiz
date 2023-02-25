@@ -6,12 +6,17 @@ import quiz.entity.QuestionToForm;
 import quiz.entity.ResultForm;
 import quiz.repostitory.QuestionRepository;
 
+import java.time.Duration;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class QuestionService {
 
     private QuestionRepository repository;
+    List<Question> listOfAllQuestionsFromRepository = new ArrayList<>();
+    Instant startingTime;
 
     public QuestionService(QuestionRepository repository) {
         this.repository = repository;
@@ -22,14 +27,17 @@ public class QuestionService {
     }
 
     public List<Question> findAll() {
-        return repository.findAll();
+        listOfAllQuestionsFromRepository = repository.findAll();
+        startingTime = Instant.now();
+        return listOfAllQuestionsFromRepository;
     }
 
     public ResultForm calculateTheResult(List<QuestionToForm> forms) {
-        List<Question> questions = repository.findAll();
+        Duration timeForTheText = Duration.between(startingTime, Instant.now());
         ResultForm resultForm = new ResultForm();
+        resultForm.setTakingSeconds(timeForTheText.toSeconds());
         for (QuestionToForm item : forms) {
-            item.setCorrectedAnswer(questions
+            item.setCorrectedAnswer(listOfAllQuestionsFromRepository
                     .stream()
                     .filter(question -> question.getId() == item.getId())
                     .findFirst()

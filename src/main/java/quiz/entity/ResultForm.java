@@ -8,5 +8,6 @@ import java.util.List;
 public class ResultForm {
 
     private float result;
+    private long takingSeconds;
     private List<QuestionToForm> questions;
 }
