@@ -128,3 +128,7 @@ Caused by: org.h2.mvstore.MVStoreException: The file is locked: C:/Users/micha/I
 	at org.h2.mvstore.FileStore.open(FileStore.java:128)
 	at org.h2.mvstore.MVStore.<init>(MVStore.java:452)
 	... 16 more
+2023-02-27 22:05:17 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Chyba syntaxe v SQL příkazu "update [*]from question set answer_c = 'T.G. Masaryk' where id = 1"; očekáváno "identifier"
+Syntax error in SQL statement "update [*]from question set answer_c = 'T.G. Masaryk' where id = 1"; expected "identifier"; SQL statement:
+update from question set answer_c = 'T.G. Masaryk' where id = 1 [42001-214]

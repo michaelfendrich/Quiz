@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import quiz.entity.Question;
 import quiz.entity.QuestionToForm;
 import quiz.entity.ResultForm;
+import quiz.entity.TypeOfQuestion;
 import quiz.repostitory.QuestionRepository;
 
 import java.time.Duration;
@@ -15,8 +16,6 @@ import java.util.List;
 public class QuestionService {
 
     private QuestionRepository repository;
-    List<Question> listOfAllQuestionsFromRepository = new ArrayList<>();
-    Instant startingTime;
 
     public QuestionService(QuestionRepository repository) {
         this.repository = repository;
@@ -27,17 +26,18 @@ public class QuestionService {
     }
 
     public List<Question> findAll() {
-        listOfAllQuestionsFromRepository = repository.findAll();
-        startingTime = Instant.now();
-        return listOfAllQuestionsFromRepository;
+        List<Question> listOfQuestion = repository.findAll();
+        return listOfQuestion;
+    }
+
+    public List<Question> findAllByType(TypeOfQuestion type) {
+        return repository.findAllByTypeOfQuestion(type);
     }
 
     public ResultForm calculateTheResult(List<QuestionToForm> forms) {
-        Duration timeForTheText = Duration.between(startingTime, Instant.now());
         ResultForm resultForm = new ResultForm();
-        resultForm.setTakingSeconds(timeForTheText.toSeconds());
         for (QuestionToForm item : forms) {
-            item.setCorrectedAnswer(listOfAllQuestionsFromRepository
+            item.setCorrectedAnswer(repository.findAll()
                     .stream()
                     .filter(question -> question.getId() == item.getId())
                     .findFirst()

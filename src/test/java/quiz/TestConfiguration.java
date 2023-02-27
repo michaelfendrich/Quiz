@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import quiz.entity.Question;
+import quiz.entity.TypeOfQuestion;
 import quiz.repostitory.QuestionRepository;
 
 import javax.sql.DataSource;
@@ -36,6 +37,11 @@ public class TestConfiguration {
     public QuestionRepository createQuestionRepository() {
         return new QuestionRepository() {
             Map<Integer, Question> questions = new HashMap<>();
+
+            @Override
+            public List<Question> findAllByTypeOfQuestion(TypeOfQuestion typeOfQuestion) {
+                return null;
+            }
             @Override
             public List<Question> findAll() {
                 return questions.values().stream().toList();

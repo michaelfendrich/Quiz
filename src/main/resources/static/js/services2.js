@@ -1,7 +1,6 @@
-
 const form = document.getElementById("container");
 const button = document.getElementById("button");
-const quizTemplate = new QuizTemplate();
+const quizTemplate = new QuizTemplate2();
 quizTemplate.prepareTemplate(form);
 button.addEventListener('click', () => {
     perform();
@@ -26,21 +25,20 @@ function perform() {
     getResponse(data);
 }
 
-async function getResponse(data) {
-    const headers = {'Accept': 'application/json',
-                    'Content-Type': 'application/json'};
-    const response = await fetch('http://localhost:8080/questions', {method:"POST", headers, body: JSON.stringify(data)})
-                        .then(res => res.json());
+function getResponse(data) {
+    const response = quizTemplate.checkAnswer(data);
     console.log(response);
     for (let i = 0; i < response.questions.length; i++){
         let questionId = response.questions[i].id
         let form = document.getElementById(questionId);
         let answers = response.questions[i];
-        if (answers.selectedAnswer === answers.correctedAnswer) {
-            let inputOfAnswer = form.querySelector(`input[type='radio'][value=${answers.correctedAnswer}]`);
+        if (answers.selectedAnswer == answers.correctAnswer) {
+            let inputOfAnswer = form.querySelector(`input[type='radio'][value=${answers.correctAnswer}]`);
             inputOfAnswer.parentNode.className = "green";
         } else {
-            let inputOfAnswer = form.querySelector(`input[type='radio'][value=${answers.correctedAnswer}]`);
+            let inputOfAnswer = form.querySelector(`input[type='radio'][value=${answers.correctAnswer}]`);
+            console.log(answers.correctAnswer);
+            console.log(inputOfAnswer);
             inputOfAnswer.parentNode.className = "green";
             inputOfAnswer = form.querySelector(`input[type='radio'][value=${answers.selectedAnswer}]`);
             inputOfAnswer.parentNode.className = "red";
@@ -65,10 +63,9 @@ async function getResponse(data) {
         #4d5bf9 ${progressValue * 3.6}deg,
         #cadcff ${progressValue * 3.6}deg
       )`;
-      if (progressValue === progressEndValue) {
+      if (progressValue >= progressEndValue) {
         clearInterval(progress);
       }
     }, speed);
     window.scrollTo(0, document.body.scrollHeight);
 }
-
