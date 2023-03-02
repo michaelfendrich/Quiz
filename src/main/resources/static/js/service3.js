@@ -1,6 +1,6 @@
 const form = document.getElementById("container");
 const button = document.getElementById("button");
-const quizTemplate = new QuizTemplate2();
+const quizTemplate = new QuizTemplate();
 quizTemplate.prepareTemplate(form);
 button.addEventListener('click', () => {
     perform();
@@ -8,9 +8,11 @@ button.addEventListener('click', () => {
 
 function perform() {
     let data = [];
+    const questionsId = quizTemplate.getIds();
+    console.log(questionsId);
     let nodes = form.childNodes;
-    for (let i = 1; i < nodes.length; i++) {
-        let oneQuestion = document.getElementById(i);
+    for (let i = 0; i < questionsId.length; i++) {
+        let oneQuestion = document.getElementById(questionsId[i]);
         let id = oneQuestion.id;
         let selectedAnswer = oneQuestion.elements.fav_language.value;
         if (!selectedAnswer) {
@@ -21,7 +23,9 @@ function perform() {
             id,
             selectedAnswer
         });
+        console.log(id + " " + selectedAnswer);
     }
+    console.log(data)
     getResponse(data);
 }
 

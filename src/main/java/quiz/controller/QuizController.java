@@ -6,8 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import quiz.entity.Question;
-import quiz.entity.QuestionToForm;
-import quiz.entity.ResultForm;
+import quiz.entity.QuestionDTO;
 import quiz.entity.TypeOfQuestion;
 import quiz.service.QuestionService;
 
@@ -22,35 +21,34 @@ public class QuizController {
     @Autowired
     private QuestionService questionService;
 
+    @GetMapping
+    public String getAllTypes(Model model) {
+        model.addAttribute("types", TypeOfQuestion.getAllTypes());
+        return "index.html";
+    }
+
+    //getting all questions in JSON
     @GetMapping("/questions")
     @ResponseBody
     public ResponseEntity<List<Question>> getQuestions() {
         return ResponseEntity.ok(questionService.findAll());
     }
 
-    @PostMapping("/questions")
-    @ResponseBody
-    public ResultForm check(@RequestBody List<QuestionToForm> question) {
-        return questionService.calculateTheResult(question);
-    }
-
+    //getting questions of a type in JSON
     @GetMapping("/api")
     @ResponseBody
-    public ResponseEntity<List<Question>> getQuestionsByType(@RequestParam("type") TypeOfQuestion type) {
-        return ResponseEntity.ok(questionService.findAllByType(type));
+    public ResponseEntity<List<Question>> getQuestionsByType(@RequestParam(value = "type", required = false) TypeOfQuestion type) {
+        if (type != null) {
+            return ResponseEntity.ok(questionService.findAllByType(type));
+        }
+        return ResponseEntity.ok(questionService.findAll());
     }
 
-    @GetMapping
-    public String getTemplate(Model model) {
-        model.addAttribute("type", TypeOfQuestion.CS_HISTORY.quizName());
-        model.addAttribute("parameter", TypeOfQuestion.CS_HISTORY.getParam());
-        return "index.html";
-    }
-
+    //posting body in JSON
     @PostMapping("api")
     @ResponseBody
-    public ResponseEntity<Question> addQuestion(@RequestBody @Valid Question newQuestion) {
+    public ResponseEntity<Question> addQuestion(@RequestBody @Valid QuestionDTO newQuestion) {
         Question savedQuestion = questionService.save(newQuestion);
-        return ResponseEntity.ok(savedQuestion);
+        return ResponseEntity.created(URI.create("localhost:8080/api/" + savedQuestion.getId())).build();
     }
 }

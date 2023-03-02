@@ -5,15 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import quiz.entity.Question;
 import quiz.repostitory.QuestionRepository;
 
-import java.lang.reflect.Field;
-import java.sql.SQLOutput;
-import java.util.List;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,7 +28,7 @@ class QuizControllerTest {
     private QuestionRepository repository;
 
     @Test
-    public void shouldReturnANewEntity() {
+    public void shouldReturnAllEntities() {
         //given
         /*
         not necessary to add any object because of db.migration which is also migrated into
@@ -42,8 +39,8 @@ class QuizControllerTest {
                 .getForObject("http://localhost:" + port + "/questions", Question[].class);
 
         //then
-        System.out.println(result.length);
+        assertThat(repository).isNotNull();
+        assertThat(result.length).isEqualTo(9);
         assertThat(result[0].getQuestionText()).contains("Czechoslovakia");
     }
-
 }

@@ -1,12 +1,14 @@
-class QuizTemplate2 {
+class QuizTemplate {
 
     async prepareTemplate(form) {
         this.startTime = Date.now(0);
-        this.questions = await fetch('http://localhost:8080/questions').then(response => response.json());
-        console.log(this.questions);
+        const params = new URLSearchParams(location.search);
+        this.questions = await fetch('http://localhost:8080/api?type=' + params.get('type')).then(response => response.json());
+        this.idsQuestions = [];
         for (let i = 0; i < this.questions.length; i++) {
             let question = document.createElement("form");
             question.id = this.questions[i].id;
+            this.idsQuestions.push(this.questions[i].id);
             question.innerHTML += `<h4 class="${i}">${this.questions[i].questionText}<h4>`;
             question.innerHTML += `<label class="neutral"><input type="radio" name="fav_language" value="a">${this.questions[i].answerA}<label><br>
                                     <label class="neutral"><input type="radio" name="fav_language" value="b">${this.questions[i].answerB}<label><br>
@@ -37,5 +39,9 @@ class QuizTemplate2 {
             "questions": data
         }
         return result;
+    }
+
+    getIds() {
+        return this.idsQuestions;
     }
 }

@@ -7,21 +7,21 @@ public enum TypeOfQuestion {
     CS_HISTORY {
         @Override
         public String getParam() {
-            return "cs_history";
+            return "CS_HISTORY";
         }
         @Override
         public String quizName() {
-            return "Quiz from Czechoslovakian History";
+            return "Czechoslovakian History";
         }
     },
     GENERAL {
         @Override
         public String getParam() {
-            return "general";
+            return "GENERAL";
         }
         @Override
         public String quizName() {
-            return "Quiz from General knowledge";
+            return "General knowledge";
         }
     };
     public abstract String getParam();

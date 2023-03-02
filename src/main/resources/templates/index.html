@@ -5,15 +5,104 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/style.css">
     <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Courier, monospace;
+        }
+        header {
+            width: 100%;
+            height: 100px;
+            background-color: rgb(17, 43, 135);
+            display: flex;
+            justify-content: space-around;
+        }
+
+        header > div {
+            padding-top: 25px;
+        }
+
+        #name {
+            font-size: 40px;
+            color: white;
+        }
+
+        header > form > button {
+            background-color: #f4511e;
+            padding: 19px;
+            margin: 22px;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: 0.5s;
+        }
+
+        header > form > button:hover {
+            background-color: #eeac99;
+            transition: 0.5s;
+        }
+
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .type {
+            margin: 10px;
+        }
+        .link {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #f4511e;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 20px;
+            padding: 25px;
+            width: 300px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .link span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 0.5s;
+        }
+
+        .link span:after {
+        content: '\00bb';
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        right: -20px;
+        transition: 0.5s;
+        }
+
+        .link:hover span {
+        padding-right: 25px;
+        }
+
+        .link:hover span:after {
+        opacity: 1;
+        right: 0;
+        }
+    </style>
 </head>
 <body>
-    <header><div th:text="${type}" th:name="${parameter}"><div></header>
-        <div id="container">
+    <header><div id="name">QUIZMANIA</div>
+        <form th:method="get" th:action="xxx">
+            <button type="submit">New question</button>
+        </form>
+    </header>
+    <div class="container">
+        <div class="type" th:each="type : ${types}">
+            <a class="link" th:href="@{/quiz.html(type=${type.getParam()})}"><span th:text="${type.quizName()}"></span></a>
         </div>
-        <button id="button">SUBMIT</button>
-<script src="js/QuizTemplate2.js"></script>
-<script src="js/services2.js"></script>
+    </div>
 </body>
 </html>
