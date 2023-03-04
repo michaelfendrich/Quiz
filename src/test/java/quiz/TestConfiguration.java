@@ -39,6 +39,9 @@ public class TestConfiguration {
             Map<Integer, Question> questions = new HashMap<>();
 
             @Override
+            public Optional<Question> findById(int id) {return null;}
+
+            @Override
             public List<Question> findAllByTypeOfQuestion(TypeOfQuestion typeOfQuestion) {
                 return null;
             }

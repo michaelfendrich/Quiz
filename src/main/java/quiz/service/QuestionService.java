@@ -7,6 +7,7 @@ import quiz.entity.TypeOfQuestion;
 import quiz.repostitory.QuestionRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuestionService {
@@ -25,6 +26,10 @@ public class QuestionService {
     public List<Question> findAll() {
         List<Question> listOfQuestion = repository.findAll();
         return listOfQuestion;
+    }
+
+    public Optional<Question> findById(int id) {
+        return repository.findById(id);
     }
 
     public List<Question> findAllByType(TypeOfQuestion type) {

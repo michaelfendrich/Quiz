@@ -6,9 +6,12 @@ import quiz.entity.Question;
 import quiz.entity.TypeOfQuestion;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
     public List<Question> findAllByTypeOfQuestion(TypeOfQuestion typeOfQuestion);
+
+    public Optional<Question> findById(int id);
 }

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Question</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Courier, monospace;
+        }
+        header {
+            width: 100%;
+            height: 100px;
+            background-color: rgb(17, 43, 135);
+            display: flex;
+            justify-content: space-around;
+        }
+
+        header > div {
+            padding-top: 25px;
+        }
+
+        #name {
+            font-size: 40px;
+            color: white;
+        }
+
+        header > form > button {
+            background-color: #f4511e;
+            padding: 19px;
+            margin: 22px;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: 0.5s;
+        }
+
+        header > form > button:hover {
+            background-color: #eeac99;
+            transition: 0.5s;
+        }
+        #message {
+            width: 40%;
+            margin: 40px auto;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #97ce6d89;
+            border-radius: 10px;
+        }
+        .errormessage {
+            color: red;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+        #newForm {
+            width: 40%;
+            margin: 40px auto;
+        }
+        fieldset {
+            color: #347304;
+        }
+        #type {
+            padding-left: 130px;
+        }
+        #submit {
+            padding: 10px 40px;
+            margin: 20px 35%;
+            background-color: #347304;
+            font-size: medium;
+            font-weight: bold;
+            color: white;
+            border: 0cm;
+            border-radius: 50px;
+            transition: 0.5s;
+        }
+        #submit:hover {
+            background-color: #90be6c;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+        .down {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<header><div id="name">QUIZMANIA</div>
+    <form th:method="get" th:action="@{/new_question}">
+        <button type="submit">New question</button>
+    </form>
+</header>
+    <div id="message" th:if="${message != null}" th:text="${message}"></div>
+    <form id="newForm" th:method="post" th:action="@{/new_question}" th:object="${dto}">
+        <fieldset>
+        <legend>Adding new question</legend>
+            <label for="textarea">Question Text</label></br>
+            <textarea id="textarea" rows="4" cols="60" th:field="*{questionText}"></textarea></br>
+            <div class="errormessage" th:errors="*{questionText}"></div>
+            <label for="answerA">Answer A</label></br>
+            <textarea id="answerA" rows="2" cols="60" th:field="*{answerA}"></textarea></br>
+            <div class="errormessage" th:errors="*{answerA}"></div>
+            <label for="answerB">Answer B</label></br>
+            <textarea id="answerB" rows="2" cols="60" th:field="*{answerB}"></textarea></br>
+            <div class="errormessage" th:errors="*{answerB}"></div>
+            <label for="answerC">Answer C</label></br>
+            <textarea id="answerC" rows="2" cols="60" th:field="*{answerC}"></textarea></br>
+            <div class="errormessage" th:errors="*{answerC}"></div>
+            <div class="down">
+            <label for="correctAnswer">Correct Answer: </label>
+            <select name="correctAnswer" th:field="*{correctAnswer}">
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+            </select>
+            <label for="type" id="type">Type: </label>
+            <select name="Type" th:field="*{typeOfQuestion}">
+                <option th:each="type : ${types}" th:value="${type.getParam()}" th:text="${type.getParam()}"></option>
+            </select></br>
+            </div>
+            <button id="submit" type="submit">POST</button>
+        </fieldset>
+    </form>
+</body>
+</html>

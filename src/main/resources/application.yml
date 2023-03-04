@@ -1,6 +1,6 @@
 server.port: 8080
 spring:
-  profiles.active: local
+  profiles.active: mem
   main:
     banner-mode: off
   h2.console:

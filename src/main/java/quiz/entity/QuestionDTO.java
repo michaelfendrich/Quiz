@@ -1,34 +1,37 @@
 package quiz.entity;
 
+import lombok.Data;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+@Data
 public class QuestionDTO {
 
-    @NotNull(message = "Cannot be empty")
-    @NotBlank(message = "Cannot be empty")
-    @Size(min = 3)
+    @NotNull(message = "⛔ Cannot be empty")
+    @NotBlank(message = "⛔ Cannot be empty")
+    @Size(min = 3, message = "⛔ Too short")
     private String questionText;
 
-    @NotNull(message = "Cannot be empty")
-    @NotBlank(message = "Cannot be empty")
+    @NotNull(message = "⛔ Cannot be empty")
+    @NotBlank(message = "⛔ Cannot be empty")
     private String answerA;
 
-    @NotNull(message = "Cannot be empty")
-    @NotBlank(message = "Cannot be empty")
+    @NotNull(message = "⛔ Cannot be empty")
+    @NotBlank(message = "⛔ Cannot be empty")
     private String answerB;
 
-    @NotNull(message = "Cannot be empty")
-    @NotBlank(message = "Cannot be empty")
+    @NotNull(message = "⛔ Cannot be empty")
+    @NotBlank(message = "⛔ Cannot be empty")
     private String answerC;
 
-    @NotNull(message = "Cannot be empty")
-    @NotBlank(message = "Cannot be empty")
+    @NotNull(message = "⛔ Cannot be empty")
+    @NotBlank(message = "⛔ Cannot be empty")
     @Size(max = 1)
     private String correctAnswer;
 
-    @NotNull(message = "Cannot be empty")
+    @NotNull(message = "⛔ Cannot be empty")
     private TypeOfQuestion typeOfQuestion;
 
     public QuestionDTO(String questionText, String answerA, String answerB, String answerC, String correctAnswer, TypeOfQuestion typeOfQuestion) {
@@ -38,6 +41,10 @@ public class QuestionDTO {
         this.answerC = answerC;
         this.correctAnswer = correctAnswer;
         this.typeOfQuestion = typeOfQuestion;
+    }
+
+    public QuestionDTO() {
+
     }
 
     public Question toEntity() {

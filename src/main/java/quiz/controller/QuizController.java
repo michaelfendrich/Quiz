@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import quiz.entity.Question;
 import quiz.entity.QuestionDTO;
@@ -23,15 +24,24 @@ public class QuizController {
 
     @GetMapping
     public String getAllTypes(Model model) {
-        model.addAttribute("types", TypeOfQuestion.getAllTypes());
         return "index.html";
     }
 
-    //getting all questions in JSON
-    @GetMapping("/questions")
-    @ResponseBody
-    public ResponseEntity<List<Question>> getQuestions() {
-        return ResponseEntity.ok(questionService.findAll());
+    @GetMapping("/new_question")
+    public String newQuestionForm(Model model) {
+        model.addAttribute("dto", new QuestionDTO());
+        return "new_question.html";
+    }
+
+    @PostMapping("/new_question")
+    public String saveNewQuestion(Model model, @Valid @ModelAttribute("dto") QuestionDTO questionDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            return "new_question.html";
+        }
+        model.addAttribute("dto", new QuestionDTO());
+        model.addAttribute("message", "✅ Added successfully");
+        questionService.save(questionDTO);
+        return "new_question.html";
     }
 
     //getting questions of a type in JSON
@@ -45,10 +55,22 @@ public class QuizController {
     }
 
     //posting body in JSON
-    @PostMapping("api")
+    @PostMapping("/api")
     @ResponseBody
     public ResponseEntity<Question> addQuestion(@RequestBody @Valid QuestionDTO newQuestion) {
         Question savedQuestion = questionService.save(newQuestion);
         return ResponseEntity.created(URI.create("localhost:8080/api/" + savedQuestion.getId())).build();
+    }
+
+    @GetMapping("/changing/{id}")
+    public String updateQuestion(@PathVariable("id") int id, Model model) {
+        Question question = questionService.findById(id).orElseThrow(NullPointerException::new);
+        model.addAttribute("dto", question);
+        return "new_question.html";
+    }
+
+    @ModelAttribute("types")
+    public List<TypeOfQuestion> getList() {
+        return TypeOfQuestion.getAllTypes();
     }
 }
