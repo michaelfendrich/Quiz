@@ -24,24 +24,30 @@ public class QuizController {
 
     @GetMapping
     public String getAllTypes(Model model) {
-        return "index.html";
+        return "index_layout.html";
     }
 
     @GetMapping("/new_question")
     public String newQuestionForm(Model model) {
         model.addAttribute("dto", new QuestionDTO());
-        return "new_question.html";
+        return "new_question_layout.html";
+    }
+
+    @GetMapping("/edit")
+    public String gettingAllItems(Model model) {
+        model.addAttribute("questions", questionService.findAll());
+        return "list.html";
     }
 
     @PostMapping("/new_question")
     public String saveNewQuestion(Model model, @Valid @ModelAttribute("dto") QuestionDTO questionDTO, BindingResult result) {
         if (result.hasErrors()) {
-            return "new_question.html";
+            return "new_question_layout.html";
         }
         model.addAttribute("dto", new QuestionDTO());
         model.addAttribute("message", "✅ Added successfully");
         questionService.save(questionDTO);
-        return "new_question.html";
+        return "new_question_layout.html";
     }
 
     //getting questions of a type in JSON
@@ -62,11 +68,29 @@ public class QuizController {
         return ResponseEntity.created(URI.create("localhost:8080/api/" + savedQuestion.getId())).build();
     }
 
-    @GetMapping("/changing/{id}")
+    @GetMapping("/edit/{id}")
     public String updateQuestion(@PathVariable("id") int id, Model model) {
         Question question = questionService.findById(id).orElseThrow(NullPointerException::new);
         model.addAttribute("dto", question);
-        return "new_question.html";
+        return "edit_question_layout.html";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String editing(@PathVariable("id") int id, Model model, @Valid @ModelAttribute("dto") QuestionDTO questionDTO, BindingResult result) {
+        if (result.hasErrors()) {
+            return "edit_question_layout.html";
+        }
+        model.addAttribute("message", "✅ Added successfully");
+        questionService.editQuestion(id, questionDTO);
+        return "edit_question_layout.html";
+    }
+
+    @PostMapping("delete/{id}")
+    public String delete(@PathVariable("id") int id, Model model) {
+        questionService.delete(id);
+        model.addAttribute("questions", questionService.findAll());
+        model.addAttribute("message", "✅ Deleted successfully");
+        return "list.html";
     }
 
     @ModelAttribute("types")

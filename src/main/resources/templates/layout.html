@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>layout</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, Courier, monospace;
+        }
+        header {
+            width: 100%;
+            height: 100px;
+            background-color: rgb(17, 43, 135);
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #name {
+            padding-top: 25px;
+            font-size: 40px;
+            color: white;
+        }
+        
+        #methods {
+            display: flex;
+            justify-content: center;
+        }
+
+        header > div > form > button {
+            background-color: #f4511e;
+            padding: 19px;
+            margin: 22px;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: 0.5s;
+        }
+
+        header > div > form > button:hover {
+            background-color: #eeac99;
+            transition: 0.5s;
+        }
+        .container {
+            width: 70%;
+            margin: 50px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .type {
+            margin: 10px;
+        }
+        .link {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #f4511e;
+            border: none;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 20px;
+            padding: 25px;
+            width: 300px;
+            transition: all 0.5s;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .link span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s;
+        }
+
+        .link span:after {
+            content: '\00bb';
+            position: absolute;
+            opacity: 0;
+            top: 0;
+            right: -20px;
+            transition: 0.5s;
+        }
+
+        .link:hover span {
+            padding-right: 25px;
+        }
+
+        .link:hover span:after {
+            opacity: 1;
+            right: 0;
+        }
+        #message {
+            width: 40%;
+            margin: 40px auto;
+            text-align: center;
+            padding: 10px 0;
+            background-color: #97ce6d89;
+            border-radius: 10px;
+        }
+        .errormessage {
+            color: red;
+            margin-bottom: 10px;
+            font-size: 12px;
+        }
+        #newForm {
+            width: 40%;
+            margin: 40px auto;
+        }
+        fieldset {
+            color: #347304;
+        }
+        #type {
+            padding-left: 130px;
+        }
+        #submit {
+            padding: 10px 40px;
+            margin: 20px 35%;
+            background-color: #347304;
+            font-size: medium;
+            font-weight: bold;
+            color: white;
+            border: 0cm;
+            border-radius: 50px;
+            transition: 0.5s;
+        }
+        #submit:hover {
+            background-color: #90be6c;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+        .down {
+            margin-top: 10px;
+        }
+        .list {
+            width: 60%;
+            margin: 0 auto;
+            margin-top: 50px;
+        }
+        .item {
+            width: 100%;
+            height: 28px;
+            border: black 1px solid;
+            background-color: rgb(224, 232, 239);
+        }
+        .textOfQuestion {
+            box-sizing: border-box;
+            width: 90%;
+            float: left;
+            overflow: hidden;
+            font-size: 18px;
+            padding-top: 3px;
+            height: 100%;
+        }
+        .button {
+            font-size: 20px;
+            box-sizing: border-box;
+            padding-top: 1px;
+            width: 36px;
+            height: 100%;
+            text-decoration: none;
+            float: right;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header th:fragment="header"><a href="http://localhost:8080" id="name">QUIZMANIA</a>
+        <div id="methods">
+            <form th:method="get" th:action="@{/new_question}">
+                <button type="submit">New question</button>
+            </form>
+            <form th:method="get" th:action="@{/edit}">
+                <button type="submit">Edit</button>
+            </form>
+        </div>
+    </header>
+</body>
+</html>

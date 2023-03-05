@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/layout.html::head}">
+</head>
+<body>
+<header th:replace="~{/layout.html::header}">
+</header>
+    <div id="message" th:if="${message != null}" th:text="${message}"></div>
+    <form id="newForm" th:method="post" th:action="@{/new_question}" th:object="${dto}">
+        <fieldset>
+        <legend>Adding new question</legend>
+            <label for="textarea">Question Text</label></br>
+            <textarea id="textarea" rows="4" cols="60" th:field="*{questionText}"></textarea></br>
+            <div class="errormessage" th:errors="*{questionText}"></div>
+            <label for="answerA">Answer A</label></br>
+            <textarea id="answerA" rows="2" cols="60" th:field="*{answerA}"></textarea></br>
+            <div class="errormessage" th:errors="*{answerA}"></div>
+            <label for="answerB">Answer B</label></br>
+            <textarea id="answerB" rows="2" cols="60" th:field="*{answerB}"></textarea></br>
+            <div class="errormessage" th:errors="*{answerB}"></div>
+            <label for="answerC">Answer C</label></br>
+            <textarea id="answerC" rows="2" cols="60" th:field="*{answerC}"></textarea></br>
+            <div class="errormessage" th:errors="*{answerC}"></div>
+            <div class="down">
+            <label for="correctAnswer">Correct Answer: </label>
+            <select name="correctAnswer" th:field="*{correctAnswer}">
+                <option value="a">A</option>
+                <option value="b">B</option>
+                <option value="c">C</option>
+            </select>
+            <label for="type" id="type">Type: </label>
+            <select name="Type" th:field="*{typeOfQuestion}">
+                <option th:each="type : ${types}" th:value="${type.getParam()}" th:text="${type.getParam()}"></option>
+            </select></br>
+            </div>
+            <button id="submit" type="submit">POST</button>
+        </fieldset>
+    </form>
+</body>
+</html>

@@ -39,6 +39,10 @@ public class TestConfiguration {
             Map<Integer, Question> questions = new HashMap<>();
 
             @Override
+            public void deleteById(int id) {
+            }
+
+            @Override
             public Optional<Question> findById(int id) {return null;}
 
             @Override

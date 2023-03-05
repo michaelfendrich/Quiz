@@ -28,6 +28,21 @@ public class QuestionService {
         return listOfQuestion;
     }
 
+    public Question editQuestion(int id, QuestionDTO question) {
+        Question questionFromRepository = repository.findById(id).orElseThrow(NullPointerException::new);
+        questionFromRepository.setQuestionText(question.getQuestionText());
+        questionFromRepository.setAnswerA(question.getAnswerA());
+        questionFromRepository.setAnswerB(question.getAnswerB());
+        questionFromRepository.setAnswerC(question.getAnswerC());
+        questionFromRepository.setCorrectAnswer(question.getCorrectAnswer());
+        questionFromRepository.setTypeOfQuestion(question.getTypeOfQuestion());
+        return repository.save(questionFromRepository);
+    }
+
+    public void delete(int id) {
+        repository.deleteById(id);
+    }
+
     public Optional<Question> findById(int id) {
         return repository.findById(id);
     }

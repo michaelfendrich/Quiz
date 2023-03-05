@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{/layout.html::head}">
+</head>
+<body>
+    <header th:replace="~{/layout.html::header}">
+    </header>
+    <div class="container">
+        <div class="type" th:each="type : ${types}">
+            <a class="link" th:href="@{/quiz.html(type=${type.getParam()})}"><span th:text="${type.quizName()}"></span></a>
+        </div>
+    </div>
+</body>
+</html>

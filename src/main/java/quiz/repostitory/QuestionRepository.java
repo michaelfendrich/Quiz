@@ -14,4 +14,6 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
     public List<Question> findAllByTypeOfQuestion(TypeOfQuestion typeOfQuestion);
 
     public Optional<Question> findById(int id);
+
+    public void deleteById(int id);
 }

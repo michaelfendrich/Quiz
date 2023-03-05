@@ -9,6 +9,8 @@ import javax.validation.constraints.Size;
 @Data
 public class QuestionDTO {
 
+    private int id;
+
     @NotNull(message = "⛔ Cannot be empty")
     @NotBlank(message = "⛔ Cannot be empty")
     @Size(min = 3, message = "⛔ Too short")

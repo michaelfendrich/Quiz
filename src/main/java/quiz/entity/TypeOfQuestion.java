@@ -23,6 +23,16 @@ public enum TypeOfQuestion {
         public String quizName() {
             return "General knowledge";
         }
+    },
+    GEOGRAPHY {
+        @Override
+        public String getParam() {
+            return "GEOGRAPHY";
+        }
+        @Override
+        public String quizName() {
+            return "Geography knowledge";
+        }
     };
     public abstract String getParam();
     public abstract String quizName();
