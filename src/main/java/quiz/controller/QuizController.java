@@ -35,7 +35,11 @@ public class QuizController {
 
     @GetMapping("/edit")
     public String gettingAllItems(Model model) {
-        model.addAttribute("questions", questionService.findAll());
+        List<Question> questionList = questionService.findAll();
+        model.addAttribute("questions", questionList);
+        if (questionList.isEmpty()) {
+            model.addAttribute("message", "Repository is empty");
+        }
         return "list.html";
     }
 

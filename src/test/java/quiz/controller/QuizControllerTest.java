@@ -1,21 +1,24 @@
 package quiz.controller;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import quiz.entity.Question;
+import quiz.entity.QuestionDTO;
+import quiz.entity.TypeOfQuestion;
 import quiz.repostitory.QuestionRepository;
-
-
-import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("ok")
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class QuizControllerTest {
 
     @LocalServerPort
@@ -28,6 +31,7 @@ class QuizControllerTest {
     private QuestionRepository repository;
 
     @Test
+    @Order(1)
     public void shouldReturnAllEntities() {
         //given
         /*
@@ -36,11 +40,51 @@ class QuizControllerTest {
          */
         //when
         Question[] result = template
-                .getForObject("http://localhost:" + port + "/questions", Question[].class);
+                .getForObject("http://localhost:" + port + "/api", Question[].class);
 
         //then
-        assertThat(repository).isNotNull();
         assertThat(result.length).isEqualTo(9);
         assertThat(result[0].getQuestionText()).contains("Czechoslovakia");
+    }
+
+    @Test
+    @Order(2)
+    public void shouldSaveNewQuestion() {
+        //given
+        repository.deleteAll();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        QuestionDTO questionDTO = new QuestionDTO("Text question to be test",
+                "test1", "test2", "test3",
+                "a", TypeOfQuestion.GENERAL);
+        HttpEntity<QuestionDTO> entity = new HttpEntity<>(questionDTO, headers);
+
+        //when
+        ResponseEntity<Question> result = template.postForEntity("http://localhost:" + port + "/api", entity, Question.class);
+
+        //then
+        assertThat(result.getStatusCodeValue()).isEqualTo(201);
+        assertThat(result.getHeaders().getLocation().toString()).isEqualTo("localhost:8080/api/1");
+    }
+
+    @Test
+    @Order(3)
+    @DisplayName("It shouldn't pass because the value of answerA is null")
+    public void shouldNotSaveBecauseAnswerAIsNull() {
+        //given
+        repository.deleteAll();
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        QuestionDTO questionDTO = new QuestionDTO("Text question to be test",
+                null, "test2", "test3",
+                "a", TypeOfQuestion.GENERAL);
+        HttpEntity<QuestionDTO> entity = new HttpEntity<>(questionDTO, headers);
+
+        //when
+        ResponseEntity<String> result = template.postForEntity("http://localhost:" + port + "/api", entity, String.class);
+
+        //then
+        assertThat(result.getStatusCodeValue()).isEqualTo(400);
+        assertThat(result.toString()).contains("Cannot be empty");
     }
 }
