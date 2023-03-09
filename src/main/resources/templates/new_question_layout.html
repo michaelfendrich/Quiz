@@ -6,7 +6,7 @@
 <body>
 <header th:replace="~{/layout.html::header}">
 </header>
-    <div id="message" th:if="${message != null}" th:text="${message}"></div>
+    <div class="message success" th:if="${message != null}" th:text="${message}"></div>
     <form id="newForm" th:method="post" th:action="@{/new_question}" th:object="${dto}">
         <fieldset>
         <legend>Adding new question</legend>

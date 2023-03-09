@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import quiz.entity.Question;
 import quiz.entity.QuestionDTO;
 import quiz.entity.TypeOfQuestion;
@@ -23,7 +24,7 @@ public class QuizController {
     private QuestionService questionService;
 
     @GetMapping
-    public String getAllTypes(Model model) {
+    public String getAllTypes() {
         return "index_layout.html";
     }
 
@@ -74,27 +75,28 @@ public class QuizController {
 
     @GetMapping("/edit/{id}")
     public String updateQuestion(@PathVariable("id") int id, Model model) {
-        Question question = questionService.findById(id).orElseThrow(NullPointerException::new);
+        Question question = questionService.findById(id);
         model.addAttribute("dto", question);
         return "edit_question_layout.html";
     }
 
+    //Put method
     @PostMapping("/edit/{id}")
     public String editing(@PathVariable("id") int id, Model model, @Valid @ModelAttribute("dto") QuestionDTO questionDTO, BindingResult result) {
         if (result.hasErrors()) {
             return "edit_question_layout.html";
         }
-        model.addAttribute("message", "✅ Added successfully");
+        model.addAttribute("message", "✅ Updated successfully");
         questionService.editQuestion(id, questionDTO);
         return "edit_question_layout.html";
     }
 
-    @PostMapping("delete/{id}")
-    public String delete(@PathVariable("id") int id, Model model) {
+    //Delete method
+    @GetMapping("delete/{id}")
+    public String delete(@PathVariable("id") int id, Model model, RedirectAttributes redirectAttributes) {
         questionService.delete(id);
-        model.addAttribute("questions", questionService.findAll());
-        model.addAttribute("message", "✅ Deleted successfully");
-        return "list.html";
+        redirectAttributes.addFlashAttribute("message", "✅ Deleted successfully");
+        return "redirect:/edit";
     }
 
     @ModelAttribute("types")

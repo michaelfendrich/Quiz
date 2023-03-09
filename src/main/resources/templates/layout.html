@@ -30,7 +30,7 @@
             justify-content: center;
         }
 
-        header > div > form > button {
+        header > div > a {
             background-color: #f4511e;
             padding: 19px;
             margin: 22px;
@@ -40,7 +40,7 @@
             transition: 0.5s;
         }
 
-        header > div > form > button:hover {
+        header > div > a:hover {
             background-color: #eeac99;
             transition: 0.5s;
         }
@@ -92,13 +92,18 @@
             opacity: 1;
             right: 0;
         }
-        #message {
+        .message {
             width: 40%;
             margin: 40px auto;
             text-align: center;
             padding: 10px 0;
-            background-color: #97ce6d89;
             border-radius: 10px;
+        }
+        .success {
+            background-color: #97ce6d89;
+        }
+        .error {
+            background-color: rgb(252, 180, 180);
         }
         .errormessage {
             color: red;
@@ -152,6 +157,7 @@
             overflow: hidden;
             font-size: 18px;
             padding-top: 3px;
+            padding-left: 3px;
             height: 100%;
         }
         .button {
@@ -169,12 +175,8 @@
 <body>
     <header th:fragment="header"><a href="http://localhost:8080" id="name">QUIZMANIA</a>
         <div id="methods">
-            <form th:method="get" th:action="@{/new_question}">
-                <button type="submit">New question</button>
-            </form>
-            <form th:method="get" th:action="@{/edit}">
-                <button type="submit">Edit</button>
-            </form>
+            <a th:href="@{/new_question}">New question</a>
+            <a th:href="@{/edit}">Edit</a>
         </div>
     </header>
 </body>

@@ -6,13 +6,12 @@
 <body>
     <header th:replace="~{/layout.html::header}"></div>
     </header>
-    <div id="message" th:if="${message != null}" th:text="${message}"></div>
+    <div class="message success" th:if="${message != null}" th:text="${message}"></div>
+    <div class="message error" th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
     <article class="list">
         <div class="item" th:each="question : ${questions}">
             <div class="textOfQuestion" th:text="${question.questionText}"></div>
-            <form th:method="delete" th:action="@{/delete/{questionId}(questionId=${question.id})}" class="button">
-                <button type="submit">❌</button>
-            </form>
+            <a th:href="@{/delete/{questionId}(questionId=${question.id})}" class="button">❌</a>
             <a th:href="@{/edit/{questionId}(questionId=${question.id})}" class="button">🖋️</a></div>
     </article>
 </body>

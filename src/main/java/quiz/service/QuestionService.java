@@ -1,13 +1,13 @@
 package quiz.service;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import quiz.entity.Question;
 import quiz.entity.QuestionDTO;
 import quiz.entity.TypeOfQuestion;
+import quiz.exception.QuestionNotFoundException;
 import quiz.repostitory.QuestionRepository;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class QuestionService {
@@ -29,22 +29,23 @@ public class QuestionService {
     }
 
     public Question editQuestion(int id, QuestionDTO question) {
-        Question questionFromRepository = repository.findById(id).orElseThrow(NullPointerException::new);
-        questionFromRepository.setQuestionText(question.getQuestionText());
-        questionFromRepository.setAnswerA(question.getAnswerA());
-        questionFromRepository.setAnswerB(question.getAnswerB());
-        questionFromRepository.setAnswerC(question.getAnswerC());
-        questionFromRepository.setCorrectAnswer(question.getCorrectAnswer());
-        questionFromRepository.setTypeOfQuestion(question.getTypeOfQuestion());
-        return repository.save(questionFromRepository);
+        Question questionToUpdate = repository.findById(id).orElseThrow(QuestionNotFoundException::new);
+        questionToUpdate.setQuestionText(question.getQuestionText());
+        questionToUpdate.setAnswerA(question.getAnswerA());
+        questionToUpdate.setAnswerB(question.getAnswerB());
+        questionToUpdate.setAnswerC(question.getAnswerC());
+        questionToUpdate.setCorrectAnswer(question.getCorrectAnswer());
+        questionToUpdate.setTypeOfQuestion(question.getTypeOfQuestion());
+        return repository.save(questionToUpdate);
     }
 
     public void delete(int id) {
-        repository.deleteById(id);
+        Question question = repository.findById(id).orElseThrow(QuestionNotFoundException::new);
+        repository.delete(question);
     }
 
-    public Optional<Question> findById(int id) {
-        return repository.findById(id);
+    public Question findById(int id) {
+        return repository.findById(id).orElseThrow(QuestionNotFoundException::new);
     }
 
     public List<Question> findAllByType(TypeOfQuestion type) {
