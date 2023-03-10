@@ -1,7 +1,7 @@
 package quiz.service;
 
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import quiz.entity.QuestionMini;
 import quiz.entity.Question;
 import quiz.entity.QuestionDTO;
 import quiz.entity.TypeOfQuestion;
@@ -50,5 +50,9 @@ public class QuestionService {
 
     public List<Question> findAllByType(TypeOfQuestion type) {
         return repository.findAllByTypeOfQuestion(type);
+    }
+
+    public List<QuestionMini> findAllMiniList() {
+        return repository.findAllMini();
     }
 }

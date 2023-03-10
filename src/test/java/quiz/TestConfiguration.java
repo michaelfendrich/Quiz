@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import quiz.entity.QuestionMini;
 import quiz.entity.Question;
 import quiz.entity.TypeOfQuestion;
 import quiz.repostitory.QuestionRepository;
@@ -38,8 +39,15 @@ public class TestConfiguration {
         return new QuestionRepository() {
             Map<Integer, Question> questions = new HashMap<>();
 
+
+
             @Override
             public void deleteById(int id) {
+            }
+
+            @Override
+            public List<QuestionMini> findAllMini() {
+                return null;
             }
 
             @Override

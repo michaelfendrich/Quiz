@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import quiz.entity.QuestionMini;
 import quiz.entity.Question;
 import quiz.entity.QuestionDTO;
 import quiz.entity.TypeOfQuestion;
@@ -36,7 +37,7 @@ public class QuizController {
 
     @GetMapping("/edit")
     public String gettingAllItems(Model model) {
-        List<Question> questionList = questionService.findAll();
+        List<QuestionMini> questionList = questionService.findAllMiniList();
         model.addAttribute("questions", questionList);
         if (questionList.isEmpty()) {
             model.addAttribute("message", "Repository is empty");

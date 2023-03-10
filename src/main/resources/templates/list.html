@@ -10,7 +10,7 @@
     <div class="message error" th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
     <article class="list">
         <div class="item" th:each="question : ${questions}">
-            <div class="textOfQuestion" th:text="${question.questionText}"></div>
+            <div class="textOfQuestion" th:text="${question.question_text}"></div>
             <a th:href="@{/delete/{questionId}(questionId=${question.id})}" class="button">❌</a>
             <a th:href="@{/edit/{questionId}(questionId=${question.id})}" class="button">🖋️</a></div>
     </article>
