@@ -30,7 +30,7 @@
             justify-content: center;
         }
 
-        header > div > a {
+        .orange-button {
             background-color: #f4511e;
             padding: 19px;
             margin: 22px;
@@ -39,7 +39,10 @@
             border-radius: 50px;
             transition: 0.5s;
         }
-
+        #new-item {
+            position: absolute;
+            margin-top: 10px;
+        }
         header > div > a:hover {
             background-color: #eeac99;
             transition: 0.5s;
@@ -170,13 +173,30 @@
             float: right;
             text-align: center;
         }
+        #login-form {
+            width: 300px;
+            margin: 10px auto;
+        }
+        #login-form > h1 {
+            width: fit-content;
+            color: rgb(0, 0, 110);
+            border-bottom: #f4511e 5px solid;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin: 15px 0;
+            font-size: small;
+        }
+        .form-control {
+            color: rgb(106, 106, 106);
+        }
     </style>
 </head>
 <body>
     <header th:fragment="header"><a href="http://localhost:8080" id="name">QUIZMANIA</a>
         <div id="methods">
-            <a th:href="@{/new_question}">New question</a>
-            <a th:href="@{/edit}">Edit</a>
+            <a class="orange-button" th:href="@{/edit}">Edit</a>
         </div>
     </header>
 </body>

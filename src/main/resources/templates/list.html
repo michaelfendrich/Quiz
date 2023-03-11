@@ -12,7 +12,9 @@
         <div class="item" th:each="question : ${questions}">
             <div class="textOfQuestion" th:text="${question.question_text}"></div>
             <a th:href="@{/delete/{questionId}(questionId=${question.id})}" class="button">❌</a>
-            <a th:href="@{/edit/{questionId}(questionId=${question.id})}" class="button">🖋️</a></div>
+            <a th:href="@{/edit/{questionId}(questionId=${question.id})}" class="button">🖋️</a>
+        </div>
+        <a class="orange-button" id="new-item" th:href="@{/new_question}">New question</a>
     </article>
 </body>
 </html>
