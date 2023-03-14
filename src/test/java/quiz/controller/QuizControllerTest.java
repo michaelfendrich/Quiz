@@ -10,16 +10,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
-import quiz.entity.Question;
-import quiz.entity.QuestionDTO;
-import quiz.entity.TypeOfQuestion;
+import quiz.entity.question.Question;
+import quiz.entity.question.QuestionDTO;
+import quiz.entity.question.TypeOfQuestion;
 import quiz.repostitory.QuestionRepository;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("ok")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class QuizControllerTest {
+
+    private final static String URL_BASE = "http://localhost:";
 
     @LocalServerPort
     private int port;
@@ -40,7 +43,7 @@ class QuizControllerTest {
          */
         //when
         Question[] result = template
-                .getForObject("http://localhost:" + port + "/api", Question[].class);
+                .getForObject(URL_BASE + port + "/api", Question[].class);
 
         //then
         assertThat(result.length).isEqualTo(9);
@@ -60,11 +63,11 @@ class QuizControllerTest {
         HttpEntity<QuestionDTO> entity = new HttpEntity<>(questionDTO, headers);
 
         //when
-        ResponseEntity<Question> result = template.postForEntity("http://localhost:" + port + "/api", entity, Question.class);
+        ResponseEntity<Question> result = template.postForEntity(URL_BASE + port + "/api", entity, Question.class);
 
         //then
         assertThat(result.getStatusCodeValue()).isEqualTo(201);
-        assertThat(result.getHeaders().getLocation().toString()).isEqualTo("localhost:8080/api/1");
+        assertThat(result.getHeaders().getLocation().toString()).contains("/api/1");
     }
 
     @Test
@@ -81,7 +84,7 @@ class QuizControllerTest {
         HttpEntity<QuestionDTO> entity = new HttpEntity<>(questionDTO, headers);
 
         //when
-        ResponseEntity<String> result = template.postForEntity("http://localhost:" + port + "/api", entity, String.class);
+        ResponseEntity<String> result = template.postForEntity(URL_BASE + port + "/api", entity, String.class);
 
         //then
         assertThat(result.getStatusCodeValue()).isEqualTo(400);

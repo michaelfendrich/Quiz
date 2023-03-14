@@ -7,10 +7,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import quiz.entity.QuestionMini;
-import quiz.entity.Question;
-import quiz.entity.QuestionDTO;
-import quiz.entity.TypeOfQuestion;
+import quiz.entity.question.QuestionMini;
+import quiz.entity.question.Question;
+import quiz.entity.question.QuestionDTO;
+import quiz.entity.question.TypeOfQuestion;
 import quiz.service.QuestionService;
 
 import javax.validation.Valid;
@@ -71,7 +71,7 @@ public class QuizController {
     @ResponseBody
     public ResponseEntity<Question> addQuestion(@RequestBody @Valid QuestionDTO newQuestion) {
         Question savedQuestion = questionService.save(newQuestion);
-        return ResponseEntity.created(URI.create("localhost:8080/api/" + savedQuestion.getId())).build();
+        return ResponseEntity.created(URI.create("/api/" + savedQuestion.getId())).body(savedQuestion);
     }
 
     @GetMapping("/edit/{id}")

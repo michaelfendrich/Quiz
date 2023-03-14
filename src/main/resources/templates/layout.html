@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org">
 <head th:fragment="head">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>">
     <title>layout</title>
     <style>
         body {
@@ -28,24 +29,35 @@
         #methods {
             display: flex;
             justify-content: center;
+            margin: 22px;
         }
-
+        .white {
+            color: white;
+            margin: 19px;
+            text-decoration: none;
+        }
+        .none {
+            border: none;
+            background: none;
+            font-size: 14.5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
         .orange-button {
             background-color: #f4511e;
             padding: 19px;
-            margin: 22px;
             color: white;
             text-decoration: none;
             border-radius: 50px;
             transition: 0.5s;
         }
+        .orange-button:hover {
+            background-color: #eeac99;
+            transition: 0.5s;
+        }
         #new-item {
             position: absolute;
             margin-top: 10px;
-        }
-        header > div > a:hover {
-            background-color: #eeac99;
-            transition: 0.5s;
         }
         .container {
             width: 70%;
@@ -197,6 +209,10 @@
     <header th:fragment="header"><a href="http://localhost:8080" id="name">QUIZMANIA</a>
         <div id="methods">
             <a class="orange-button" th:href="@{/edit}">Edit</a>
+            <a sec:authorize="isAnonymous()" class="white" th:href="@{/account/login}">LOGIN</a>
+            <form class="none" method="post" th:action="@{/account/logout}" sec:authorize="isAuthenticated()">
+                <button class="white none">LOGOUT</button>
+            </form>
         </div>
     </header>
 </body>

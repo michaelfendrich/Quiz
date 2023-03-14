@@ -1,12 +1,10 @@
 package quiz.configuration;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.type.TypeFactory;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import quiz.entity.TypeOfQuestion;
+import quiz.entity.question.TypeOfQuestion;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {

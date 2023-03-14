@@ -1,6 +1,5 @@
-package quiz.entity;
+package quiz.entity.question;
 
-import java.lang.reflect.Array;
 import java.util.List;
 
 public enum TypeOfQuestion {

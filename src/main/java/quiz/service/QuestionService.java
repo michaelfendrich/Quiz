@@ -1,10 +1,10 @@
 package quiz.service;
 
 import org.springframework.stereotype.Service;
-import quiz.entity.QuestionMini;
-import quiz.entity.Question;
-import quiz.entity.QuestionDTO;
-import quiz.entity.TypeOfQuestion;
+import quiz.entity.question.QuestionMini;
+import quiz.entity.question.Question;
+import quiz.entity.question.QuestionDTO;
+import quiz.entity.question.TypeOfQuestion;
 import quiz.exception.QuestionNotFoundException;
 import quiz.repostitory.QuestionRepository;
 import java.util.List;

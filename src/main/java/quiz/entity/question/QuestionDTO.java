@@ -1,4 +1,4 @@
-package quiz.entity;
+package quiz.entity.question;
 
 import lombok.Data;
 

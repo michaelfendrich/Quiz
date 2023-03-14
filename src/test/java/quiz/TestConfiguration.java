@@ -10,9 +10,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import quiz.entity.QuestionMini;
-import quiz.entity.Question;
-import quiz.entity.TypeOfQuestion;
+import quiz.entity.question.QuestionMini;
+import quiz.entity.question.Question;
+import quiz.entity.question.TypeOfQuestion;
 import quiz.repostitory.QuestionRepository;
 
 import javax.sql.DataSource;

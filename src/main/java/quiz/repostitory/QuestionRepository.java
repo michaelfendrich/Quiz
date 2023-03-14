@@ -3,9 +3,9 @@ package quiz.repostitory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import quiz.entity.QuestionMini;
-import quiz.entity.Question;
-import quiz.entity.TypeOfQuestion;
+import quiz.entity.question.QuestionMini;
+import quiz.entity.question.Question;
+import quiz.entity.question.TypeOfQuestion;
 
 import java.util.List;
 import java.util.Optional;
