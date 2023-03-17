@@ -6,6 +6,7 @@
 <body>
     <header th:replace="~{/layout.html::header}">
     </header>
+    <div class="message success" th:if="${message != null}" th:text="${message}"></div>
     <article>
         <div id="login-form">
                 <h1>LOGIN</h1>

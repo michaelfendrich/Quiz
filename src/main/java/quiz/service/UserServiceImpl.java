@@ -5,7 +5,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import quiz.entity.user.UserDTO;
 import quiz.entity.user.UserEntity;
