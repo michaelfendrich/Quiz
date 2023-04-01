@@ -10,7 +10,6 @@ function perform() {
     let data = [];
     const questionsId = quizTemplate.getIds();
     console.log(questionsId);
-    let nodes = form.childNodes;
     for (let i = 0; i < questionsId.length; i++) {
         let oneQuestion = document.getElementById(questionsId[i]);
         let id = oneQuestion.id;
@@ -58,10 +57,10 @@ function getResponse(data) {
     let progressBar = document.querySelector(".circular-progress");
     let valueContainer = document.querySelector(".value-container");
     let progressValue = 0;
-    let progressEndValue = response.result;
+    let progressEndValue = response.result ? response.result : 0;
+    console.log(progressEndValue);
     let speed = 20;
     let progress = setInterval(() => {
-      progressValue++;
       valueContainer.textContent = `${progressValue}%`;
       progressBar.style.background = `conic-gradient(
         #4d5bf9 ${progressValue * 3.6}deg,
@@ -70,6 +69,7 @@ function getResponse(data) {
       if (progressValue >= progressEndValue) {
         clearInterval(progress);
       }
+      progressValue++;
     }, speed);
     window.scrollTo(0, document.body.scrollHeight);
 }

@@ -2,6 +2,7 @@ package quiz.repostitory;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import quiz.entity.question.QuestionMini;
 import quiz.entity.question.Question;
@@ -13,12 +14,11 @@ import java.util.Optional;
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
-    public List<Question> findAllByTypeOfQuestion(TypeOfQuestion typeOfQuestion);
+    @Query(nativeQuery = true, value = "Select * from question where type_of_question = :#{#type.name()} order by rand() limit :limit")
+    List<Question> findRandomByTypeOfQuestion(@Param("type") TypeOfQuestion type, @Param("limit") int limit);
 
-    public Optional<Question> findById(int id);
-
-    public void deleteById(int id);
+    Optional<Question> findById(int id);
 
     @Query(value = "select id, question_text from Question", nativeQuery = true)
-    public List<QuestionMini> findAllMini();
+    List<QuestionMini> findAllMini();
 }

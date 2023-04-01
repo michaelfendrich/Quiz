@@ -1,18 +1,20 @@
 package quiz.service;
 
 import org.springframework.stereotype.Service;
-import quiz.entity.question.QuestionMini;
 import quiz.entity.question.Question;
 import quiz.entity.question.QuestionDTO;
+import quiz.entity.question.QuestionMini;
 import quiz.entity.question.TypeOfQuestion;
 import quiz.exception.QuestionNotFoundException;
 import quiz.repostitory.QuestionRepository;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class QuestionService {
 
     private QuestionRepository repository;
+    private static final int LIMIT = 15;
 
     public QuestionService(QuestionRepository repository) {
         this.repository = repository;
@@ -21,11 +23,6 @@ public class QuestionService {
     public Question save(QuestionDTO question) {
         Question toSave = question.toEntity();
         return repository.save(toSave);
-    }
-
-    public List<Question> findAll() {
-        List<Question> listOfQuestion = repository.findAll();
-        return listOfQuestion;
     }
 
     public Question editQuestion(int id, QuestionDTO question) {
@@ -48,8 +45,11 @@ public class QuestionService {
         return repository.findById(id).orElseThrow(QuestionNotFoundException::new);
     }
 
-    public List<Question> findAllByType(TypeOfQuestion type) {
-        return repository.findAllByTypeOfQuestion(type);
+    public List<Question> findByTypeOrderByRandom(TypeOfQuestion type) {
+        if (type == null) {
+            return repository.findAll();
+        }
+        return repository.findRandomByTypeOfQuestion(type, LIMIT);
     }
 
     public List<QuestionMini> findAllMiniList() {
