@@ -46,7 +46,7 @@ public class AccountController {
             result.rejectValue("confirmPassword", "error", "⛔ Passwords are not equal.");
             return "/account/registration.html";
         } catch (DuplicateEmailException e) {
-            result.rejectValue("email", "error", "⛔ Email has already been using.");
+            result.rejectValue("email", "error", "⛔ Email has already been used.");
             return "/account/registration.html";
         }
         attributes.addFlashAttribute("message", "✅ User registered");
